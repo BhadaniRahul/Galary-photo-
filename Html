@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Interactive Image Gallery</h1>
+        <div class="filter-buttons">
+            <button class="btn active" data-filter="all">All</button>
+            <button class="btn" data-filter="nature">Nature</button>
+            <button class="btn" data-filter="architecture">Architecture</button>
+            <button class="btn" data-filter="travel">Travel</button>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <div class="gallery-item" data-category="nature">
+            <img src="https://picsum.photos/id/10/800/600" alt="Forest Pathway" class="gallery-img">
+            <div class="caption">Forest Pathway</div>
+        </div>
+        <div class="gallery-item" data-category="architecture">
+            <img src="https://picsum.photos/id/1011/800/600" alt="Modern Building" class="gallery-img">
+            <div class="caption">Modern Building</div>
+        </div>
+        <div class="gallery-item" data-category="travel">
+            <img src="https://picsum.photos/id/1036/800/600" alt="Mountain Road" class="gallery-img">
+            <div class="caption">Mountain Road</div>
+        </div>
+        <div class="gallery-item" data-category="nature">
+            <img src="https://picsum.photos/id/28/800/600" alt="Peaceful Lake" class="gallery-img">
+            <div class="caption">Peaceful Lake</div>
+        </div>
+        <div class="gallery-item" data-category="architecture">
+            <img src="https://picsum.photos/id/1048/800/600" alt="Cityscape" class="gallery-img">
+            <div class="caption">Cityscape</div>
+        </div>
+        <div class="gallery-item" data-category="travel">
+            <img src="https://picsum.photos/id/1050/800/600" alt="Coastal View" class="gallery-img">
+            <div class="caption">Coastal View</div>
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <button class="nav-btn prev-btn">&#10094;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div id="lightbox-caption"></div>
+        </div>
+        <button class="nav-btn next-btn">&#10095;</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
