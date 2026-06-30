@@ -1,0 +1,89 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+    const filterButtons = document.querySelectorAll(".btn");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const closeBtn = document.querySelector(".close-btn");
+    const prevBtn = document.querySelector(".prev-btn");
+    const nextBtn = document.querySelector(".next-btn");
+
+    let activeItems = [...galleryItems]; // Tracks currently filtered/visible items
+    let currentIndex = 0;
+
+    // --- Category Filtering (Bonus Feature) ---
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            // Update active button styling
+            document.querySelector(".btn.active").classList.remove("active");
+            button.classList.add("active");
+
+            const filterValue = button.getAttribute("data-filter");
+
+            // Filter items in the DOM
+            galleryItems.forEach(item => {
+                if (filterValue === "all" || item.getAttribute("data-category") === filterValue) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+
+            // Update activeItems array for accurate lightbox navigation
+            activeItems = galleryItems.filter(item => filterValue === "all" || item.getAttribute("data-category") === filterValue);
+        });
+    });
+
+    // --- Lightbox Functionality ---
+    function openLightbox(index) {
+        currentIndex = index;
+        const item = activeItems[currentIndex];
+        const imgUrl = item.querySelector(".gallery-img").src;
+        const captionText = item.querySelector(".caption").textContent;
+
+        lightboxImg.src = imgUrl;
+        lightboxCaption.textContent = captionText;
+        lightbox.style.display = "flex";
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = "none";
+    }
+
+    function showNext() {
+        currentIndex = (currentIndex + 1) % activeItems.length;
+        openLightbox(currentIndex);
+    }
+
+    function showPrev() {
+        currentIndex = (currentIndex - 1 + activeItems.length) % activeItems.length;
+        openLightbox(currentIndex);
+    }
+
+    // Attach click events dynamically based on filtered visibility
+    galleryItems.forEach(item => {
+        item.addEventListener("click", () => {
+            const visualIndex = activeItems.indexOf(item);
+            if (visualIndex !== -1) openLightbox(visualIndex);
+        });
+    });
+
+    // Event Listeners for controls
+    closeBtn.addEventListener("click", closeLightbox);
+    nextBtn.addEventListener("click", showNext);
+    prevBtn.addEventListener("click", showPrev);
+
+    // Close lightbox when clicking outside the content area
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    // Keyboard navigation support
+    document.addEventListener("keydown", (e) => {
+        if (lightbox.style.display === "flex") {
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") showNext();
+            if (e.key === "ArrowLeft") showPrev();
+        }
+    });
+});
